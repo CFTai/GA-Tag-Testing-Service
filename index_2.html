@@ -1,0 +1,20 @@
+<html><body></body></html><script type="text/javascript">
+    var canvas = document.createElement('canvas');
+    canvas.id = "myCanvas";
+    canvas.width = 600
+    canvas.height = 600;
+    document.body.appendChild(canvas);var ctx=canvas.getContext("2d");ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.color = "black";
+    ctx.font = "30px Comic Sans MS";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    lineHeight = 40;
+    // txt = 'Chan Tai Man\nABC Company\nManager\n1234\n'
+    txt = 'CITIC Telecom International CPC Limited(((formerly known as PSINet HK and CPCNet(((is a wholly owned subsidiary of CITIC Telecom International Holdings Limited, (((and is a technological company involved in managed cloud computing,(((IP networking, information security,(((and data center services.'
+    txt = txt.replaceAll('(((', '\n');
+    lines = txt.split('\n');
+    for (var i = 0; i < lines.length; i++)
+        ctx.fillText(lines[i], canvas.width/2, canvas.height/2 + lineHeight * i);
+</script>

@@ -1,34 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bitmovin Player Demo</title>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="text/html; charset=utf-8" />
 
-<html>
-    <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YQSDKGQYEN"></script>
-        <!-- GA4 -->
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-YQSDKGQYEN');
-        </script>
-        <!-- End GA4 -->
+  <!-- Bitmovin Player -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bitmovin-player@8/bitmovinplayer.js"></script>
 
-        <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-WV2LCCG');
-        </script>
-        <!-- End Google Tag Manager -->
+  <style>
+    .player-wrapper {
+      width: 90%;
+      margin: 20px auto;
+      box-shadow: 0 0 30px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+<div class="player-wrapper">
+  <div id="player"></div>
+</div>
 
-        <Title>Google Analytics Testing page</Title> 
-    </head>
-    <body>
-        <h1>Testing abc 1234</h1>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/dFMKO0kVFUc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>    
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WV2LCCG"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
-    </body>
+<script type="text/javascript">
+  var conf = {
+    key: 'ed7af4da-8455-4caf-90d9-b9276a425188',
+    analytics: {
+      key: '08616159-6fe4-4921-9d82-e9f399fe0907',
+      title: 'CPC Testing video',
+      videoId: 'wizard-CPC_Testing_video-1674030772487',
+    },
+  };
+
+  var source = {
+    title: 'CPC Testing video',
+    dash: 'https://d2p9q2tpzeexx6.cloudfront.net/2fc1f0b4-f4c9-4e2f-ab4b-fa0e42778956/manifest.mpd',
+  };
+
+  var player = new bitmovin.player.Player(document.getElementById('player'), conf);
+  player.load(source);
+</script>
+
+</body>
 </html>

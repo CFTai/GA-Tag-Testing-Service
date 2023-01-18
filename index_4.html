@@ -1,0 +1,70 @@
+<html><body></body></html><script type="text/javascript">
+    var canvas = document.createElement('canvas');
+    canvas.id = "myCanvas";
+    canvas.width = 800
+    canvas.height = 100;
+    canvas.style.background = "blue"
+    document.body.appendChild(canvas);var ctx=canvas.getContext("2d");
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.color = "black";
+    ctx.font = "17px Comic Sans MS";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    lineHeight = 17;
+    // txt = 'Chan Tai Man\nABC Company\nManager\n1234\n'
+    txt_name = 'Malgorzata Laskowska-Lendo Malgorzata Laskowska-Lendo'
+    txt_company = "CITIC Telecom CPC"
+    // txt = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It w as popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    // lines = txt.split('\n');
+    txt_name = wordWrap(txt_name, 40);
+    lines_name = txt_name.split('\n');
+    txt_company = wordWrap(txt_company, 40);
+    lines_company = txt_company.split('\n');
+
+    // Count line height
+    expected_height_for_text = (lines_name.length + lines_company.length) * lineHeight;
+    current_position_y = canvas.height / 2 - expected_height_for_text / 2;
+
+    
+    console.log(canvas.height)
+    console.log(expected_height_for_text)
+    console.log(current_position_y);
+
+    for (var i = 0; i < lines_name.length; i++)
+        ctx.fillText(lines_name[i], canvas.width/2, current_position_y + lineHeight * i);
+        current_position_y = current_position_y + lineHeight
+        console.log(current_position_y);
+
+    for (var i = 0; i < lines_company.length; i++)
+        console.log("line company start: " + current_position_y);
+        ctx.fillText(lines_company[i], canvas.width/2, current_position_y + lineHeight * i);
+        current_position_y = current_position_y + lineHeight
+        console.log(current_position_y);
+
+    
+    function wordWrap(str, maxWidth) {
+        var newLineStr = "\n"; done = false; res = '';
+        while (str.length > maxWidth) {
+            found = false;
+            for (i = maxWidth - 1; i >= 0; i--) {
+                if (testWhite(str.charAt())) {
+                    res = res + [str.slice(0, i), newLineStr].join('');
+                    console.log(res)
+                    str = str.slice(i + 1);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                res += [str.slice(0, maxWidth), newLineStr].join('');
+                str = str.slice(maxWidth);
+            }
+        }
+        return res + str;
+    }
+    function testWhite(x) {
+        var white = new RegExp(/^\s$/);
+        return white.test(x.charAt(0))
+    }
+</script>

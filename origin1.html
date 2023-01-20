@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="1200" height="1222">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, 800, 1222);
+ctx.save();
+ctx.translate(1222, 200);
+ctx.rotate(-Math.PI*1.5);
+ctx.fillStyle = "red";
+ctx.fillRect(0, 0, 800, 1222);
+ctx.fillStyle = "black";
+ctx.textAlign = "center";
+ctx.fillText('123', 800/2, 384);
+ctx.fillText('abc12345', 800/2, 470);
+ctx.restore();
+</script>
+
+</body>
+</html>

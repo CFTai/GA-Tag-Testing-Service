@@ -1,0 +1,37 @@
+var canvas = document.createElement('canvas');
+canvas.id = "myCanvas";
+canvas.width = $parameters.BadgeWidth;
+canvas.height = 800;
+canvas.style.visibility = "hidden";
+document.body.appendChild(canvas);
+
+var ctx=canvas.getContext("2d");
+ctx.fillStyle = 'white';
+ctx.fillRect(0,0, canvas.width, canvas.height);
+ctx.save();
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle = "black";
+ctx.textAlign = "center";
+ctx.font= $parameters.ParticipantName_fontWeight + ' ' + $parameters.ParticipantName_fontSize + 'px Arial, sans-serif';
+ctx.fillText('Malgorzata', canvas.width/2, 250);
+ctx.fillText('Laskowska-Lendo', canvas.width/2, 390);
+ctx.font= $parameters.CompanyName_fontWeight + ' ' + $parameters.CompanyName_fontSize + 'px Arial, sans-serif';
+ctx.fillText('CITIC Telecom', canvas.width/2, 530);
+ctx.fillText('International', canvas.width/2, 630);
+ctx.font= $parameters.CompanyName_fontWeight + ' ' + 65 + 'px Arial, sans-serif';
+ctx.textAlign = "right";
+ctx.fillText('T2 P', canvas.width * 0.95, 730);
+ctx.restore();
+var printText = ctx.canvas.toDataURL().replace("data:image/png;base64,", "");
+//var printText = "PGh0bWw+DQo8Ym9keT4NCjxzcGFuPkFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPC9zcGFuPg0KPC9ib2R5Pg0KPC9odG1sPg==";
+
+cordova.plugins.brotherPrinter.printViaSDK(printText,
+function (response3) {
+    $parameters.Success = true;
+    $resolve();
+}, function (error3) {
+    $parameters.Success = false;
+    $parameters.ErrorMessage = "print failure 62h: " + error3;
+    $resolve();
+});

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="1125" height="800">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, 1125, 800);
+ctx.save();
+ctx.fillStyle = "red";
+ctx.fillRect(0, 0, 1125, 800);
+ctx.fillStyle = "black";
+ctx.textAlign = "center";
+{/* Setting */}
+nameLine = 0
+companyLine = 0
+maxParticipantNameLengthCount = 26
+maxParticipantCompanyLengthCount = 35
+currentParticipantNameLengthcount = 0
+currentParticipantCompanyNameLengthCount = 0
+participantNameFontSize = 100
+participantCompanyFontSize = 70
+
+{/* If length of input value > count * 2, recommand to scale down the font size */ }
+
+participantName = "Malgorzata Laskowska-Lendo";
+participantCompany = "CITIC Telecom International CPC Limtied";
+
+currentParticipantNameLengthcount = participantName.length
+currentParticipantCompanyNameLengthCount = participantCompany.length
+
+participantName, currentParticipantNameLengthcount, participantNameFontSize = fontCalculation(participantName, participantNameFontSize)
+{/* ctx.font= 700 + ' ' + 100 + 'px Arial, sans-serif';
+ctx.fillText('Malgorzata ', 1125/2, 270);
+ctx.fillText('Laskowska-Lendo', 1125/2, 370);
+ctx.font= 500 + ' ' + 50 + 'px Arial, sans-serif';
+ctx.fillText('CITIC Telecom ', 1125/2, 470);
+ctx.font= 500 + ' ' + 50 + 'px Arial, sans-serif';
+ctx.fillText('International CPC Limited', 1125/2, 530); */}
+ctx.font= 500 + ' ' + 65 + 'px Arial, sans-serif';
+ctx.textAlign = "right";
+ctx.fillText('T2 P', 1125*0.95, 730);
+ctx.restore();
+
+function fontCalculation(text, word_count) {
+    splittedText = '';
+    lineCounts = 0;
+    fontsize = 14;
+
+    // Check text length first
+    if (text.length < word_count * 2 ) {
+        splittedText = wordWrap(text, word_count);
+        lineCounts = splittedText.count
+    } else {
+        // as font size scale down, which means word_count could be scale up
+        // size = parseInt(resizer.css("font-size"), 10);
+        // resizer.css("font-size", size - 1);
+        
+        splittedText = wordWrap(text, word_count)
+        lineCounts = 2 // Fixed line to 2 as font size will be changed
+    }
+    lineCounts = splittedText.length
+
+    return [splittedText, lineCounts, fontsize];
+}
+
+function testWhite(x) {
+        var white = new RegExp(/^\s$/);
+        return white.test(x.charAt(0))
+    }
+
+function wordWrap(str, maxWidth) {
+        var newLineStr = "\n"; done = false; res = '';
+        found = false;
+        console.log(str.length)
+        while (str.length > maxWidth) {
+            for (i = maxWidth; i && !found; i++) {
+                if (testWhite(str.charAt(i))) {
+                    res = res + [str.slice(0, i), newLineStr].join('');
+                    console.log(res)
+                    str = str.slice(i + 1);
+                    found = true;
+                }
+            }
+            if (!found) {
+                res += [str.slice(0, maxWidth), newLineStr].join('');
+                str = str.slice(maxWidth);
+            }
+        }
+        return res + str;
+    }
+
+
+</script>
+
+</body>
+</html>

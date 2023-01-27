@@ -15,55 +15,92 @@ ctx.fillStyle = "red";
 ctx.fillRect(0, 0, 1125, 800);
 ctx.fillStyle = "black";
 ctx.textAlign = "center";
+current_position_y = 370;
 {/* Setting */}
 nameLine = 0
 companyLine = 0
-maxParticipantNameLengthCount = 26
+maxParticipantNameLengthCount = 20
 maxParticipantCompanyLengthCount = 35
 currentParticipantNameLengthcount = 0
 currentParticipantCompanyNameLengthCount = 0
 participantNameFontSize = 100
-participantCompanyFontSize = 70
+participantCompanyFontSize = 60
 
 {/* If length of input value > count * 2, recommand to scale down the font size */ }
 
-participantName = "Malgorzata Laskowska-Lendo";
-participantCompany = "CITIC Telecom International CPC Limtied";
+participantName = "Malgorzata Laskowska-Lendo Malgorzata Laskowska-Lendo Malgorzata Laskowska-Lendo";
+participantCompany = "CITIC Telecom ";
 
 currentParticipantNameLengthcount = participantName.length
 currentParticipantCompanyNameLengthCount = participantCompany.length
 
-participantName, currentParticipantNameLengthcount, participantNameFontSize = fontCalculation(participantName, participantNameFontSize)
-{/* ctx.font= 700 + ' ' + 100 + 'px Arial, sans-serif';
-ctx.fillText('Malgorzata ', 1125/2, 270);
-ctx.fillText('Laskowska-Lendo', 1125/2, 370);
-ctx.font= 500 + ' ' + 50 + 'px Arial, sans-serif';
-ctx.fillText('CITIC Telecom ', 1125/2, 470);
-ctx.font= 500 + ' ' + 50 + 'px Arial, sans-serif';
-ctx.fillText('International CPC Limited', 1125/2, 530); */}
-ctx.font= 500 + ' ' + 65 + 'px Arial, sans-serif';
-ctx.textAlign = "right";
-ctx.fillText('T2 P', 1125*0.95, 730);
+result = fontCalculation(participantName, maxParticipantNameLengthCount, participantNameFontSize)
+participantName = result[0]
+currentParticipantNameLengthcount = result[1]
+participantNameFontSize = result[2]
+participantName = participantName.split('\n');
+// ctx.font= 700 + ' ' + 100 + 'px Arial, sans-serif';
+// ctx.fillText('Malgorzata', 1125/2, 270);
+// ctx.fillText('Laskowska-Lendo', 1125/2, 370);
+
+// ctx.font= 500 + ' ' + 50 + 'px Arial, sans-serif';
+// ctx.fillText('CITIC Telecom ', 1125/2, 470);
+
+// ctx.font= 500 + ' ' + 50 + 'px Arial, sans-serif';
+// ctx.fillText('International CPC Limited', 1125/2, 530);
+
+// ctx.font= 500 + ' ' + 65 + 'px Arial, sans-serif';
+// ctx.textAlign = "right";
+// ctx.fillText('T2 P', 1125*0.95, 730);
+
+ctx.font = 700 + ' ' + participantNameFontSize + 'px Arial, sans-serif';
+for (var i = 0; i < participantName.length; i++)
+        ctx.fillText(participantName[i], 1125/2, current_position_y + participantNameFontSize * i);
+        current_position_y = current_position_y + participantNameFontSize * i
+
+        
+result = fontCalculation(participantCompany, maxParticipantNameLengthCount, participantCompanyFontSize)
+participantCompany = result[0]
+currentParticipantCompanyNameLengthCount = result[1]
+participantCompanyFontSize = result[2]
+participantCompany = participantCompany.split('\n');
+
+current_position_y = current_position_y + 30
+
+ctx.font = 500 + ' ' + participantCompanyFontSize + 'px Arial, sans-serif';
+for (var i = 0; i < participantCompany.length; i++)
+        ctx.fillText(participantCompany[i], 1125/2, current_position_y + participantCompanyFontSize * i);
+        current_position_y = current_position_y + participantCompanyFontSize * i
 ctx.restore();
 
-function fontCalculation(text, word_count) {
+function fontCalculation(text, maxWordCount, maxFontSize) {
     splittedText = '';
     lineCounts = 0;
-    fontsize = 14;
+    fontsize = maxFontSize;
 
     // Check text length first
-    if (text.length < word_count * 2 ) {
-        splittedText = wordWrap(text, word_count);
-        lineCounts = splittedText.count
+    if (text.length < maxWordCount * 2 ) {
+        splittedText = wordWrap(text, maxWordCount);
+        lineCounts = splittedText.count;
+        console.log(lineCounts)
     } else {
         // as font size scale down, which means word_count could be scale up
         // size = parseInt(resizer.css("font-size"), 10);
         // resizer.css("font-size", size - 1);
-        
-        splittedText = wordWrap(text, word_count)
+
+        // while(height > 300 && fontSize > 10) {
+        //         height = span.css("font-size", fontSize).height();
+        //         fontSize--;
+        //     }
+
+        // Calculate font size by text length
+        // Example: if font size is 100 then arround 3x words can be shown in label
+        // and if font size is 70 then arround 5x words can be shown
+        // calculate the radio
+        splittedText = wordWrap(text, text.length / 1.75)
+        fontsize = (maxWordCount * 100) / (text.length /1.75)
         lineCounts = 2 // Fixed line to 2 as font size will be changed
     }
-    lineCounts = splittedText.length
 
     return [splittedText, lineCounts, fontsize];
 }
@@ -74,24 +111,27 @@ function testWhite(x) {
     }
 
 function wordWrap(str, maxWidth) {
-        var newLineStr = "\n"; done = false; res = '';
+    var newLineStr = "\n"; done = false; res = '';
+    while (str.length > maxWidth) {                 
         found = false;
-        console.log(str.length)
-        while (str.length > maxWidth) {
-            for (i = maxWidth; i && !found; i++) {
-                if (testWhite(str.charAt(i))) {
-                    res = res + [str.slice(0, i), newLineStr].join('');
-                    console.log(res)
-                    str = str.slice(i + 1);
-                    found = true;
-                }
-            }
-            if (!found) {
-                res += [str.slice(0, maxWidth), newLineStr].join('');
-                str = str.slice(maxWidth);
+        // Inserts new line at first whitespace of the line
+        for (i = maxWidth - 1; i >= 0; i--) {
+            if (testWhite(str.charAt(i))) {
+                res = res + [str.slice(0, i), newLineStr].join('');
+                str = str.slice(i + 1);
+                found = true;
+                break;
             }
         }
-        return res + str;
+        // Inserts new line at maxWidth position, the word is too long to wrap
+        if (!found) {
+            res += [str.slice(0, maxWidth), newLineStr].join('');
+            str = str.slice(maxWidth);
+        }
+
+    }
+
+    return res + str;
     }
 
 
